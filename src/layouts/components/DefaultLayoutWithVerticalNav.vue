@@ -98,6 +98,12 @@ const upgradeBanner = computed(() => {
       />
       <VerticalNavLink
         :item="{
+          title: 'Clients',
+          to: '/clients',
+        }"
+      />
+      <VerticalNavLink
+        :item="{
           title: 'Register',
           icon: 'bx-user-plus',
           to: '/register',

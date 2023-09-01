@@ -54,26 +54,15 @@
 
               <!-- remember me checkbox -->
               <div class="d-flex align-center justify-space-between flex-wrap mt-1 mb-4">
-                <VCheckbox
-                  v-model="form.remember"
-                  label="Remember me"
-                />
+                <VCheckbox v-model="form.remember" label="Remember me" />
 
-                <!-- <RouterLink
-                  class="text-primary ms-2 mb-1"
-                  to="javascript:void(0)"
-                >
+                <!-- <RouterLink class="text-primary ms-2 mb-1" to="javascript:void(0)">
                   Forgot Password?
                 </RouterLink> -->
               </div>
 
               <!-- login button -->
-              <VBtn
-                block
-                type="submit"
-              >
-                Login
-              </VBtn>
+              <VBtn block type="submit">Login</VBtn>
             </VCol>
 
             <!-- create account -->
@@ -151,7 +140,7 @@ async function handleLogin()
     password: form.value.password
   }
   const response = await login(data);
-  console.log('response:', response);
+  // console.log('response:', response);
   if(!response.error) {
      // redirect to dashboard
     //  this.$router.push("/profile");

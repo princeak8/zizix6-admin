@@ -25,6 +25,11 @@ const router = createRouter({
           auth: true
         },
         {
+            path: 'clients',
+            component: () => import('../pages/clients.vue'),
+            auth: true
+        },
+        {
           path: 'package/:packageId/services',
           component: () => import('../pages/package-services.vue'),
           props: true
@@ -56,6 +61,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    console.log('entering ', to.path);
   const userAuth = useUserAuthStore();
   const publicRoutes = ['/login', '/register'];
   const authRequired = !publicRoutes.includes(to.path);

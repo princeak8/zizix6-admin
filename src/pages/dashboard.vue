@@ -11,6 +11,12 @@ import chart from '@images/cards/chart-success.png'
 import card from '@images/cards/credit-card-primary.png'
 import paypal from '@images/cards/paypal-error.png'
 import wallet from '@images/cards/wallet-info.png'
+import { useUserAuthStore } from '@/store/userAuth';
+
+const { user } = useUserAuthStore();
+
+console.log('token', user.token);
+
 
 console.log("onSetup:dashboard")
 </script>

@@ -7,7 +7,9 @@ import { post } from "@/utilities/api";
         if(!response.error) {
             if(response.data.token) {
                 const {token, token_expires_in, user} = response.data;
-                const data = {...user, token, expires: token_expires_in};
+                // console.log('token', token);
+                const data = {...user, token: token, expires: token_expires_in};
+                // console.log('data:', data);
                 localStorage.setItem('user', JSON.stringify(data));
                 let userAuth = useUserAuthStore();
                 userAuth.loginSuccess(data);

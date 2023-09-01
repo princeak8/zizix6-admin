@@ -48,11 +48,11 @@ export const useUserAuthStore = defineStore('authUser', {
     loginSuccess(user) {
         this.user = user;
     },
-    // logout() {
-    //     console.log("loging out");
-    //     this.user = null;
-    //     localStorage.setItem('user', null);
-    // },
+    logout() {
+        console.log("loging out");
+        this.user = null;
+        localStorage.setItem('user', null);
+    },
     // async loadUser (id) {
     //   if (this.userId !== null) throw new Error('Already logged in')
     //   const res = await api.user.load(id)

@@ -6,6 +6,11 @@
     <VCol cols="12">
       <VCard title="Packages Services">
 
+        <RouterLink :to="'/company-packages'" class="ml-6">
+          <b style="color: blueviolet;">Company packages </b>
+        </RouterLink>
+        - <b>{{clientPackage.name}} package</b>
+
         <VRow v-if="errorMessage != ''" class="mb-3">
           <VAlert type="error">{{ errorMessage }}</VAlert>
         </VRow>
@@ -18,7 +23,7 @@
     </v-btn> -->
 
     
-        <AddPackageServiceModal :dialog="dialog" @toggle="toggleModal" />
+        <AddPackageServiceModal :dialog="dialog" :packageId="clientPackage.id" @toggle="toggleModal" @saved="serviceAdded()" />
 
         <div v-if="loaded && errorMessage == ''" class="body">
           
@@ -95,6 +100,11 @@ import { defineProps, onBeforeMount } from 'vue';
     getPackage(props.packageId);
 
     const toggleModal = () => dialog.value = !dialog.value;
+
+    const serviceAdded = async () => {
+      await getPackage(props.packageId);
+      toggleModal();
+    }
 
   onBeforeMount(async() => {
     //

@@ -1,7 +1,3 @@
-<script setup>
-import avatar1 from '@images/avatars/avatar-1.png'
-</script>
-
 <template>
   <VBadge
     dot
@@ -110,7 +106,7 @@ import avatar1 from '@images/avatars/avatar-1.png'
           <VDivider class="my-2" />
 
           <!-- 👉 Logout -->
-          <VListItem to="/login">
+          <VListItem @click="logout()">
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -119,7 +115,7 @@ import avatar1 from '@images/avatars/avatar-1.png'
               />
             </template>
 
-            <VListItemTitle>Logout</VListItemTitle>
+            <VListItemTitle>Logouts</VListItemTitle>
           </VListItem>
         </VList>
       </VMenu>
@@ -127,3 +123,16 @@ import avatar1 from '@images/avatars/avatar-1.png'
     </VAvatar>
   </VBadge>
 </template>
+
+<script setup>
+  import avatar1 from '@images/avatars/avatar-1.png';
+import router from "../../router";
+import { useUserAuthStore } from '../../store/userAuth';
+
+  const logout = () => {
+    let userStore = useUserAuthStore();
+    userStore.logout();
+    router.push('login');
+
+  }
+</script>
