@@ -7,7 +7,7 @@
       <VCard title="Company Packages">
         
         <BaseModal v-if="showModal" @toggle="toggleModal" :title="'Add a Package'">
-          <AddPackageModal1 @saved="packageAdded()" />
+          <AddPackageModal @saved="packageAdded()" :isParent="false" />
         </BaseModal>
         <BaseModal v-if="showUpdateModal" @toggle="toggleUpdateModal" :title="'Update Package'">
           <UpdatePackageModal @updated="packageUpdated" 
@@ -35,7 +35,7 @@
               <td class="text-center">{{ p.total_services }}</td>
               <td class="text-center">
                 <VBtn color="warning" dark class="" @click="toggleUpdateModal(p.id)">Edit</VBtn>
-                <RouterLink :to="'package/'+p.id+'/services'">
+                <RouterLink :to="'company-package/'+p.id+'/services'">
                   <VBtn color="primary" dark>View Services</VBtn>
                 </RouterLink>
               </td>
@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-  import AddPackageModal1 from '../components/modals/AddPackageModal1.vue';
+  import AddPackageModal from '../components/modals/AddPackageModal.vue';
   
   import UpdatePackageModal from '../components/modals/UpdatePackageModal.vue';
 

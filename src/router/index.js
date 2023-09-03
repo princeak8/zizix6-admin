@@ -25,15 +25,30 @@ const router = createRouter({
           auth: true
         },
         {
+            path: 'services',
+            component: () => import('../pages/services.vue'),
+            auth: true
+        },
+        {
             path: 'clients',
             component: () => import('../pages/clients.vue'),
             auth: true
         },
         {
-          path: 'package/:packageId/services',
+            path: 'client/:clientId/packages',
+            component: () => import('../pages/client-packages.vue'),
+            props: true
+          },
+        {
+          path: 'company-package/:packageId/services',
           component: () => import('../pages/package-services.vue'),
           props: true
         },
+        {
+            path: 'package/:packageId/services',
+            component: () => import('../pages/package-services.vue'),
+            props: true
+          },
       ],
     },
     {

@@ -6,6 +6,11 @@
     <VCol cols="12">
       <VCard title="Packages Services">
 
+        <RouterLink :to="'/company-packages'" class="ml-6">
+          <b style="color: blueviolet;">Company packages </b>
+        </RouterLink>
+        - <b>{{clientPackage.name}} package</b>
+
         <VRow v-if="errorMessage != ''" class="mb-3">
           <VAlert type="error">{{ errorMessage }}</VAlert>
         </VRow>
@@ -21,14 +26,9 @@
         <AddPackageServiceModal :dialog="dialog" :packageId="clientPackage.id" @toggle="toggleModal" @saved="serviceAdded()" />
 
         <div v-if="loaded && errorMessage == ''" class="body">
-
-          <RouterLink :to="`/client/${clientPackage.client_id}/packages`" class="ml-6">
-              <b style="color: blueviolet;">Packages </b>
-            </RouterLink>
-          - <b>{{clientPackage.name}} package</b>
           
           <VCardText>
-            List of all <b>{{clientPackage.name}} Package</b> Services 
+            List of all {{clientPackage.name}} Package Services 
           </VCardText>
           
           <VBtn color="primary" dark class="ml-3" @click="toggleModal()">Add Service</VBtn>

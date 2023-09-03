@@ -17,6 +17,10 @@ export const saveParentPackage = async(data) => {
     return await post(`save_parent_package`, data);
 }
 
+export const savePackage = async(data) => {
+    return await post(`save_package`, data);
+}
+
 export const updatePackage = async(data) => {
     return await post(`update_package`, data);
 }

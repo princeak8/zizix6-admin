@@ -40,7 +40,7 @@
               <td class="text-center">
                 <VBtn color="warning" dark class="" @click="toggleUpdateModal(c.id)">Edit</VBtn>
                 <RouterLink :to="'client/'+c.id+'/packages'">
-                  <VBtn color="primary" dark>View</VBtn>
+                  <VBtn color="primary" dark>View Packages</VBtn>
                 </RouterLink>
               </td>
             </tr>

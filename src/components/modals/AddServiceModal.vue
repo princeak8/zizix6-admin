@@ -8,11 +8,14 @@
             <VCol cols="10" class="my-1 align-center">
                 <VTextField v-model="name" label="Name" placeholder="package Name" :rules="nameRules" />
             </VCol>
-            <VCol cols="10">clientId: {{ props.clientId }}
-                <VTextField v-model="email" autofocus placeholder="johndoe@email.com" label="Email" type="email" :rules="emailRules" required />
+            <VCol cols="10">
+                <VTextarea v-model="description" placeholder="description of service" label="Description" :rules="descriptionRules" required />
             </VCol>
             <VCol cols="10" class="my-1 align-center">
-                <VTextField v-model="phoneNumber" label="Phone Number" placeholder="Enter Phone NUmber" />
+                <VRadioGroup v-model="expiry" label="Expires:">
+                    <VRadio :value="true" label="Yes" />
+                    <VRadio :value="false" label="No" />
+                </VRadioGroup>
             </VCol>
             <VCol cols="10" class="my-1">
                 <VBtn block type="submit">Submit</VBtn>
@@ -23,43 +26,30 @@
 
 <script setup>
     
-    import { defineEmits, defineProps, onBeforeMount } from 'vue';
+    import { defineEmits, onBeforeMount } from 'vue';
 
-    import { savePackage, saveParentPackage } from '@/services/packages';
-    
+    import { save } from '@/services/services';
+
     let name = ref('');
-    let email = ref(null);
-    let phoneNumber = ref(null);
+    let description = ref(null);
+    let expiry = ref(false);
     let isFormValid = ref(false);
     let submitError = ref('');
 
     const nameRules = [ v => !!v || 'Name is required' ];
-    const emailRules = [
-            v => !v || /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid',
-        ];
+    const descriptionRules = [ v => !!v || 'Description is required' ];
 
-    const props = defineProps({
-        clientId: String,
-        isParent: Boolean
-    })
     const emits = defineEmits(['saved']);
 
     async function submitForm() {
         if(isFormValid.value) {
-            console.log('submit', props.clientId);
+            console.log('submit');
             const data = {
                 name: name.value,
-                email: email.value,
-                phone_number: phoneNumber.value
+                description: description.value,
+                expiry: (expiry.value) ? 1 : 0
             };
-            if(!props.isParent) {
-                data.client_id = props.clientId;
-                console.log('added');
-            }else{
-                console.log('not added');
-            }
-            console.log('data:', data);
-            const response = (props.isParent) ? await saveParentPackage(data) : await savePackage(data);
+            const response = await save(data);
             console.log('response:', response);
             if(!response.error) {
                 console.log("added successfully");

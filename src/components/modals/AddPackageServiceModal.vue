@@ -73,7 +73,7 @@
     const onSelect = (a) => {
         console.log('service:', serviceId.value);
         let selService = services.value.filter((service) => service.id == serviceId.value)[0]
-        showExpiryDate.value = (selService.expiry == 0) ? false : true;
+        showExpiryDate.value = (selService.expiry) ? true : false;
     }
 
     const onExpiryChange = (c) => {
