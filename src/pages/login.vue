@@ -134,7 +134,7 @@ const isPasswordVisible = ref(false)
 
 async function handleLogin()
 {
-  console.log('login', form.value.email);
+  // console.log('login', form.value.email);
   const data = {
     email: form.value.email,
     password: form.value.password
@@ -155,6 +155,7 @@ async function handleLogin()
 }
 
 onBeforeMount(() => {
+  console.log('mode: ',process.env.NODE_ENV);
   // console.log("title:", import.meta.env.VITE_API_TITLE);
 })
 </script>
