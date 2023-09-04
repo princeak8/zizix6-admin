@@ -7,7 +7,7 @@
       <VCard title="Company Packages">
         
         <BaseModal v-if="showModal" @toggle="toggleModal" :title="'Add a Package'">
-          <AddPackageModal @saved="packageAdded()" :isParent="false" />
+          <AddPackageModal @saved="packageAdded()" :isParent="true" />
         </BaseModal>
         <BaseModal v-if="showUpdateModal" @toggle="toggleUpdateModal" :title="'Update Package'">
           <UpdatePackageModal @updated="packageUpdated" 
