@@ -48,6 +48,7 @@
     const emits = defineEmits(['updated']);
 
     async function submitForm() {
+        console.log('expiry:', expiry.value);
         if(isFormValid.value) {
             console.log('submit');
             const data = {
@@ -56,6 +57,7 @@
                 description: description.value,
                 expiry: (expiry.value) ? 1 : 0
             };
+            console.log('data: ',data);
             const response = await update(data);
             console.log('response:', response);
             if(!response.error) {

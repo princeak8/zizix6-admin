@@ -41,7 +41,7 @@ const router = createRouter({
           },
         {
           path: 'company-package/:packageId/services',
-          component: () => import('../pages/package-services.vue'),
+          component: () => import('../pages/company-package-services.vue'),
           props: true
         },
         {
