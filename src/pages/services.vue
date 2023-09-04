@@ -1,7 +1,7 @@
 
 
 <template>
-  <VRow>
+  <VRow class="pb-4">
 
     <VCol cols="12">
       <VCard title="Services" class="pb-5">
@@ -20,7 +20,7 @@
         </VCardText>
         <VBtn color="primary" dark class="ml-3" @click="toggleModal()">Add Service</VBtn>
         
-        <VTable height="250" fixed-header>
+        <VTable fixed-header>
           <thead>
             <tr>
               <th class="text-uppercase text-center">Name</th>
@@ -41,7 +41,7 @@
             </tr>
             <p v-else>No Services yet</p>
           </tbody>
-  </VTable>
+        </VTable>
 
       </VCard>
     </VCol>

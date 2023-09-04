@@ -20,7 +20,7 @@
         </VCardText>
         <VBtn color="primary" dark class="ml-3" @click="toggleModal()">Add New Package</VBtn>
         
-        <VTable height="250" fixed-header>
+        <VTable fixed-header>
           <thead>
             <tr>
               <th class="text-uppercase">Name</th>
