@@ -10,9 +10,10 @@ import { post } from "@/utilities/api";
                 // console.log('token', token);
                 const data = {...user, token: token, expires: token_expires_in};
                 // console.log('data:', data);
-                localStorage.setItem('user', JSON.stringify(data));
+                
                 let userAuth = useUserAuthStore();
                 userAuth.loginSuccess(data);
+                localStorage.setItem('user', JSON.stringify(data));
             }else{
                 response.message = "An error occured";
                 console.log('Token Error!: Token was not sent');
