@@ -3,6 +3,7 @@ import axios from 'axios';
 import { handleError } from './errorHandler';
 
     const baseUrl = import.meta.env.VITE_API_BASE_URL
+    const userStore = useUserAuthStore();
     const { user } = useUserAuthStore();
 
     export const post = async(url, data) => {
@@ -45,6 +46,10 @@ import { handleError } from './errorHandler';
             const localUser = (localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : null;
             console.log('store User:', user);
             console.log('local User: ', localUser);
+            if(user == null) {
+                user = localUser;
+                userStore.loginSuccess(localUser);
+            }
             const token = (user && user.token) ? user.token : null;
             // console.log('get token', token);
             const config = {
