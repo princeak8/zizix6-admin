@@ -4,7 +4,7 @@
   <VRow>
 
     <VCol cols="12">
-      <VCard title="Services">
+      <VCard title="Services" class="pb-5">
         
         <BaseModal v-if="showModal" @toggle="toggleModal" :title="'Add Service'">
           <AddServiceModal @saved="serviceAdded()" />

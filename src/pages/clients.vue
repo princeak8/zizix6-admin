@@ -4,7 +4,7 @@
   <VRow>
 
     <VCol cols="12">
-      <VCard title="Clients">
+      <VCard title="Clients" class="pb-5">
         
         <BaseModal v-if="showModal" @toggle="toggleModal" :title="'Add Client'">
           <AddClientModal @saved="clientAdded()" />

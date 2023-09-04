@@ -4,7 +4,7 @@
   <VRow>
 
     <VCol cols="12">
-      <VCard title="Packages Services">
+      <VCard title="Packages Services" class="pb-5">
 
         <RouterLink :to="'/company-packages'" class="ml-6">
           <b style="color: blueviolet;">Company packages </b>

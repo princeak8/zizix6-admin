@@ -4,7 +4,7 @@
   <VRow>
 
     <VCol cols="12">
-      <VCard title="Client Packages">
+      <VCard title="Client Packages" class="pb-5">
         
         <BaseModal v-if="showModal" @toggle="toggleModal" :title="'Add a Package'">
           <AddPackageModal @saved="packageAdded()" :clientId="props.clientId" :isParent=false />

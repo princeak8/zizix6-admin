@@ -4,7 +4,7 @@
   <VRow>
 
     <VCol cols="12">
-      <VCard title="Packages Services">
+      <VCard title="Packages Services" class="pb-5">
 
         <VRow v-if="errorMessage != ''" class="mb-3">
           <VAlert type="error">{{ errorMessage }}</VAlert>

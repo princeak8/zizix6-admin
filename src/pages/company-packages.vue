@@ -1,10 +1,10 @@
 
 
 <template>
-  <VRow>
+  <VRow class="pb-5">
 
     <VCol cols="12">
-      <VCard title="Company Packages">
+      <VCard title="Company Packages" class="pb-5">
         
         <BaseModal v-if="showModal" @toggle="toggleModal" :title="'Add a Package'">
           <AddPackageModal @saved="packageAdded()" :isParent="true" />
@@ -42,7 +42,7 @@
             </tr>
             <p v-else>No packages for the parent company</p>
           </tbody>
-  </VTable>
+        </VTable>
 
       </VCard>
     </VCol>
