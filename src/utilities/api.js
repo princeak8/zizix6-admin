@@ -4,7 +4,7 @@ import { handleError } from './errorHandler';
 
     const baseUrl = import.meta.env.VITE_API_BASE_URL
     const userStore = useUserAuthStore();
-    const { user } = useUserAuthStore();
+    let { user } = useUserAuthStore();
 
     export const post = async(url, data) => {
         try{
@@ -47,8 +47,9 @@ import { handleError } from './errorHandler';
             console.log('store User:', user);
             console.log('local User: ', localUser);
             if(user == null) {
-                user = localUser;
+                user = {...localUser};
                 userStore.loginSuccess(localUser);
+                console.log('store User2:', user);
             }
             const token = (user && user.token) ? user.token : null;
             // console.log('get token', token);
