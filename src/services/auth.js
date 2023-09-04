@@ -9,7 +9,7 @@ import { post } from "@/utilities/api";
                 const {token, token_expires_in, user} = response.data;
                 // console.log('token', token);
                 const data = {...user, token: token, expires: token_expires_in};
-                console.log('data:', data);
+                // console.log('data:', data);
                 
                 let userAuth = useUserAuthStore();
                 userAuth.loginSuccess(data);
