@@ -8,8 +8,8 @@ import { handleError } from './errorHandler';
     export const post = async(url, data) => {
         try{
             // console.log('base url:',import.meta.env.VITE);
-            const user = (localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : null;
-            const token = (user && user.token) ? user.token : null;
+            const localUser = (localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : null;
+            const token = (localUser && localUser.token) ? localUser.token : null;
             
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
@@ -51,8 +51,10 @@ import { handleError } from './errorHandler';
                 headers: { Authorization: `Bearer ${token}` }
             };
             const response = await axios.get(baseUrl+url, config);
-            user.accessToken = response.data.token;
-            localStorage.setItem('user', JSON.stringify(user));
+            if(response.data.token && response.data.token != null) {
+                user.accessToken = response.data.token;
+                localStorage.setItem('user', JSON.stringify(user));
+            }
             return {
                 data: response.data.data,
                 error: false,

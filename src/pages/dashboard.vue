@@ -15,10 +15,11 @@ import { useUserAuthStore } from '@/store/userAuth';
 
 const { user } = useUserAuthStore();
 
-console.log('token', user.token);
+console.log('store user', user);
 
 
-console.log("onSetup:dashboard")
+// console.log("onSetup:dashboard")
+
 </script>
 
 <template>
