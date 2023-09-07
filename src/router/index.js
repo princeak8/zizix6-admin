@@ -30,6 +30,16 @@ const router = createRouter({
             auth: true
         },
         {
+            path: 'expiring-services',
+            component: () => import('../pages/expiring-services.vue'),
+            auth: true
+        },
+        {
+            path: 'expired-services',
+            component: () => import('../pages/expired-services.vue'),
+            auth: true
+        },
+        {
             path: 'clients',
             component: () => import('../pages/clients.vue'),
             auth: true

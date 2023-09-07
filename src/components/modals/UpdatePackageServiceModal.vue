@@ -34,23 +34,30 @@
 <script setup>
     import { getServices } from '@/services/services';
 
+    import { update } from '@/services/package-services';
+
     import '@vuepic/vue-datepicker/dist/main.css';
 
     import { defineEmits, defineProps, onBeforeMount } from 'vue';
 
-    import { save } from '@/services/package-services';
-
-
-    let services = ref([]);
-    let serviceId = ref();
-    let name = ref('');
-    // let expiryDate = ref(new Date());
-    let expiryDate = ref(null);
-    let host = ref('');
+    
+    let serviceId = ref(props.packageService.serviceId);
+    let packageId = ref(props.packageService.packageId);
+    let services = ref(props.services);
+    let packageServiceId = ref(props.packageService.id);
+    let name = ref(props.packageService.name);
+    let expiryDate = ref(props.packageService.expiryDate);
+    let host = ref(props.packageService.host);
     let showExpiryDate = ref(true);
     let isFormValid = ref(false);
     let expiryError = ref('');
     let submitError = ref('');
+
+    const props = defineProps({
+        services: Array,
+        packageService: Object,
+    })
+    const emits = defineEmits(['updated']);
 
     const nameRules = [ v => !!v || 'Name is required' ];
     const serviceRules = [ v => !!v || 'Select a Service' ];
@@ -63,7 +70,6 @@
     }
 
     const onExpiryChange = (c) => {
-        console.log('changed');
         if(expiryDate.value) {
             console.log('clear error');
             expiryError.value = '';
@@ -72,27 +78,24 @@
         }
     }
 
-    const props = defineProps({
-        packageId: Number
-    })
-    const emits = defineEmits(['saved']);
-
     async function submitForm() {
         if(showExpiryDate.value && expiryDate.value) {
             if(isFormValid.value) {
                 console.log('submit');
                 const data = {
-                    package_id: props.packageId,
+                    package_service_id: packageServiceId.value,
+                    package_id: packageId.value,
                     service_id: serviceId.value,
                     name: name.value,
-                    host: host.value
+                    host: host.value,
                 };
+                console.log('data:',data);
                 if(showExpiryDate.value) data.expiry_date = expiryDate.value;
-                const response = await save(data);
+                const response = await update(data);
                 console.log('response:', response);
                 if(!response.error) {
-                    console.log("added successfully");
-                    emits('saved');
+                    console.log("updated successfully");
+                    emits('updated');
                 }else{
                     submitError.value = response.message;
                     setTimeout(() => {

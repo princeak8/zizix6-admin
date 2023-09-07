@@ -11,63 +11,83 @@ import chart from '@images/cards/chart-success.png'
 import card from '@images/cards/credit-card-primary.png'
 import paypal from '@images/cards/paypal-error.png'
 import wallet from '@images/cards/wallet-info.png'
+
+import { onBeforeMount } from 'vue';
 import { useUserAuthStore } from '@/store/userAuth';
+
+import { getHomeData } from '@/services/home';
 
 const { user } = useUserAuthStore();
 
-console.log('store user', user);
-
-
 // console.log("onSetup:dashboard")
+
+let data = ref();
+let loaded = ref(false);
+let error = ref('');
+
+const fetchHomeData = async () => {
+  let response = await getHomeData();
+  loaded.value = true;
+  if (!response.error) {
+    data.value = response.data;
+  }else{
+    error.value = 'Oops! an error occured';
+    console.log('error getting home data', response.message);
+  }
+}
+
+onBeforeMount(async() => {
+    await fetchHomeData();
+  })
 
 </script>
 
 <template>
   <VRow>
     <!-- 👉 Congratulations -->
-    <VCol
+    <!-- <VCol
       cols="12"
       md="8"
     >
       <AnalyticsCongratulations />
+    </VCol> -->
+
+    <VCol cols="3" class="text-white">
+        <!-- 👉 Clients -->
+          <VCard title="Clients" class="text-center pb-5" style="border: solid thin #000; width: 100%;">
+            <b v-if="loaded" class="font-weight-extrabold extrabold">{{data.clientsCount}}</b>
+            <b v-if="!loaded" class="font-weight-extrabold extrabold">...LOADING...</b>
+          </VCard>
     </VCol>
 
-    <VCol
-      cols="12"
-      sm="4"
-    >
-      <VRow>
-        <!-- 👉 Profit -->
-        <VCol
-          cols="12"
-          md="6"
-        >
-          <CardStatisticsVertical
-            v-bind="{
-              title: 'Profit',
-              image: chart,
-              stats: '$12,628',
-              change: 72.80,
-            }"
-          />
-        </VCol>
-
-        <!-- 👉 Sales -->
-        <VCol
-          cols="12"
-          md="6"
-        >
-          <CardStatisticsVertical
-            v-bind="{
-              title: 'Sales',
-              image: wallet,
-              stats: '$4,679',
-              change: 28.42,
-            }"
-          />
-        </VCol>
-      </VRow>
+    <VCol cols="3" class="text-white">
+        <!-- 👉 Expiring Services -->
+        <RouterLink :to="'/expiring-services'">
+          <VCard title="Expiring" class="text-center pb-5" style="border: solid thin #000; width: 100%">
+            <b v-if="loaded" class="font-weight-extrabold extrabold">{{data.expiringServicesCount}}</b>
+            <b v-if="!loaded" class="font-weight-extrabold extrabold">...LOADING...</b>
+          </VCard>
+        </RouterLink>
     </VCol>
+
+    <VCol cols="3" class="text-white">
+        <!-- 👉 Expired Services -->
+        <RouterLink :to="'/expired-services'">
+          <VCard title="Expired" class="text-center pb-5" style="border: solid thin #000; width: 100%">
+            <b v-if="loaded" class="font-weight-extrabold extrabold">{{data.expiredServicesCount}}</b>
+            <b v-if="!loaded" class="font-weight-extrabold extrabold">...LOADING...</b>
+          </VCard>
+        </RouterLink>
+    </VCol>
+
+    <VCol cols="3" class="text-white">
+        <!-- 👉 Services -->
+          <VCard title="Services" class="text-center pb-5 bg-blue" style="border: solid thin #000; width: 100%;">
+            <b v-if="loaded" class="font-weight-extrabold extrabold text-white">{{data.packagesServicesCount}}</b>
+            <b v-if="!loaded" class="font-weight-extrabold extrabold">...LOADING...</b>
+          </VCard>
+    </VCol>
+
 
     <!-- 👉 Total Revenue -->
     <VCol
@@ -160,3 +180,27 @@ console.log('store user', user);
     </VCol>
   </VRow>
 </template>
+
+<style scoped>
+  .bold {
+    font-weight: bold;
+  }
+  .extrabold {
+    font-weight: bolder;
+  }
+  .bg-green {
+    background-color: green;
+  }
+  .bg-green {
+    background-color: yellow;
+  }
+  .bg-green {
+    background-color: blue;
+  }
+  .bg-green {
+    background-color: red;
+  }
+  .text-white{
+    color: #FFF;
+  }
+</style>

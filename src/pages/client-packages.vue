@@ -90,15 +90,17 @@
 
   const toggleModal = () => showModal.value = !showModal.value;
 
-  const toggleUpdateModal = (id) => {
-    // console.log('packageId:', id);
-    let selPackage = selectedPackage(id);
-    // console.log('sel package', selPackage);
-    if(selPackage != null) {
-      packageId.value = id;
-      packageName.value = selPackage.name;
-      packageEmail.value = selPackage.email;
-      packagePhoneNumber.value = selPackage.phone_number
+  const toggleUpdateModal = (id=null) => {
+    if(id != null) {
+        // console.log('packageId:', id);
+        let selPackage = selectedPackage(id);
+        // console.log('sel package', selPackage);
+        if(selPackage != null) {
+        packageId.value = id;
+        packageName.value = selPackage.name;
+        packageEmail.value = selPackage.email;
+        packagePhoneNumber.value = selPackage.phone_number
+        }
     }
     showUpdateModal.value = !showUpdateModal.value;
   }

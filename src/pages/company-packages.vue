@@ -20,7 +20,7 @@
         </VCardText>
         <VBtn color="primary" dark class="ml-3" @click="toggleModal()">Add New Package</VBtn>
         
-        <VTable fixed-header>
+        <VTable v-if="loaded" fixed-header>
           <thead>
             <tr>
               <th class="text-uppercase">Name</th>
@@ -63,6 +63,7 @@
   let packages = ref([]);
   let showModal = ref(false);
   let showUpdateModal = ref(false);
+  let loaded = ref(false);
 
   let packageName = ref('');
   let packageEmail = ref(null);
@@ -87,6 +88,7 @@
   const fetchParentPackages = async () => {
     console.log("getting parent packages");
     let response = await getParentPackages();
+    loaded.value = true;
     if (!response.error) {
       packages.value = response.data;
     }else{

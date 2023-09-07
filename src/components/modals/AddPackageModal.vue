@@ -44,6 +44,15 @@
     })
     const emits = defineEmits(['saved']);
 
+    function clear()
+    {
+        name.value = '';
+        email = ref(null);
+        phoneNumber.value = null;
+        isFormValid.value = false;
+        submitError.value = '';
+    }
+
     async function submitForm() {
         if(isFormValid.value) {
             console.log('submit', props.clientId);
@@ -63,6 +72,7 @@
             console.log('response:', response);
             if(!response.error) {
                 console.log("added successfully");
+                clear();
                 emits('saved');
             }else{
                 submitError.value = response.message;

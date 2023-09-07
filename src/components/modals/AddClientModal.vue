@@ -6,10 +6,10 @@
         </VRow>
         <VRow class="d-flex justify-center">
             <VCol cols="10" class="my-1 align-center">
-                <VTextField v-model="name" label="Name" placeholder="package Name" :rules="nameRules" />
+                <VTextField v-model="name" autofocus="" label="Name" placeholder="Name" :rules="nameRules" />
             </VCol>
             <VCol cols="10">
-                <VTextField v-model="email" autofocus placeholder="johndoe@email.com" label="Email" type="email" :rules="emailRules" required />
+                <VTextField v-model="email" placeholder="johndoe@email.com" label="Email" type="email" :rules="emailRules" required />
             </VCol>
             <VCol cols="10" class="my-1 align-center">
                 <VTextField v-model="phoneNumber" label="Phone Number" placeholder="Enter Phone NUmber" />
