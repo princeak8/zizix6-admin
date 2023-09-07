@@ -18,8 +18,9 @@ import { useUserAuthStore } from '@/store/userAuth';
 import { getHomeData } from '@/services/home';
 
 const { user } = useUserAuthStore();
+console.log('user:', user);
 
-// console.log("onSetup:dashboard")
+console.log("onSetup:dashboard")
 
 let data = ref();
 let loaded = ref(false);
