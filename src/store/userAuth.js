@@ -46,7 +46,7 @@ export const useUserAuthStore = defineStore('authUser', {
   actions: {
     // no context as first argument, use `this` instead
     loginSuccess(user) {
-        this.user = user;
+        this.user = {...user};
     },
     logout() {
         console.log("loging out");

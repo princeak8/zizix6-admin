@@ -23,3 +23,17 @@ export const handleError = (error) => {
 
     return message;
 }
+
+// TS function to ensure that an error caught i the try catch is an error and if Notification, give it a message
+
+// function ensureError(value: unknown): Error {
+//     if (value instanceof Error) return value
+  
+//     let stringified = '[Unable to stringify the thrown value]'
+//     try {
+//       stringified = JSON.stringify(value)
+//     } catch {}
+  
+//     const error = new Error(`This value was thrown as is, not through an Error: ${stringified}`)
+//     return error
+//   }
