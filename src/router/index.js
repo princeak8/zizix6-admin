@@ -55,10 +55,15 @@ const router = createRouter({
           props: true
         },
         {
-            path: 'package/:packageId/services',
-            component: () => import('../pages/package-services.vue'),
-            props: true
-          },
+          path: 'package/:packageId/services',
+          component: () => import('../pages/package-services.vue'),
+          props: true
+        },
+        {
+          path: 'price-lists',
+          component: () => import('../pages/price-lists.vue'),
+          props: true
+        },
       ],
     },
     {

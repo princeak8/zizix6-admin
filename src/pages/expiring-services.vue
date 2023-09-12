@@ -17,7 +17,7 @@
       Open Dialog
     </v-btn> -->
         <BaseModal v-if="showUpdateModal" @toggle="toggleUpdateModal" :title="'Update Service'">
-          <UpdatePackageServiceModal @updated="serviceUpdated" :services="services" :packageService="packageService" :serviceId="serviceId" />
+          <UpdatePackageServiceModal @updated="serviceUpdated" :services="services" :hosts="hosts" :packageService="packageService" :serviceId="serviceId" />
         </BaseModal>
 
         <div v-if="loaded && errorMessage == ''" class="body">
@@ -35,6 +35,8 @@
                 <th>Service</th>
                 <th>Package</th>
                 <th>Client</th>
+                <th>Amount</th>
+                <th>$ Amount</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -43,10 +45,12 @@
               <tr v-for="service in packageServices" :key="service.id">
                 <td>{{ service.name }}</td>
                 <td class="text-center">{{ service.expiry_date }}</td>
-                <td class="text-center">{{ service.host }}</td>
+                <td class="text-center">{{ (service.host) ? service.host.name : '' }}</td>
                 <td class="text-center">{{ service.service.name }}</td>
                 <td class="text-center">{{ service.package.name }}</td>
                 <td class="text-center">{{ service.client.name }}</td>
+                <td class="text-center">₦{{ service.amount }}</td>
+                <td class="text-center">${{ service.dollar_amount }}</td>
                 <td class="text-center">
                   <VBtn color="warning" dark class="" @click="toggleUpdateModal(service.id)">Edit</VBtn>
                 </td>
@@ -63,6 +67,7 @@
 </template>
 
 <script setup>
+import { getHosts } from '@/services/hosts';
 import { expiring } from '@/services/package-services';
 import { getServices } from '@/services/services';
 import { onBeforeMount } from 'vue';
@@ -76,6 +81,7 @@ import UpdatePackageServiceModal from '../components/modals/UpdatePackageService
   let packageServices = ref([]);
   let packageService = ref({})
   let services = ref([]);
+  let hosts = ref([]);
 
   const getExpiringServices = async() => {
     let response = await expiring();
@@ -106,10 +112,12 @@ import UpdatePackageServiceModal from '../components/modals/UpdatePackageService
         console.log('not null:');
         packageService.value.id = id;
         packageService.value.name = selService.name;
-        packageService.value.host = selService.host;
+        packageService.value.hostId = selService.host_id;
         packageService.value.expiryDate = selService.expiry_date;
         packageService.value.serviceId = selService.service_id;
         packageService.value.packageId = selService.package_id;
+
+        console.log('package service', packageService.value);
       }
       console.log('service:', packageService.value);
     }
@@ -124,13 +132,29 @@ import UpdatePackageServiceModal from '../components/modals/UpdatePackageService
     return null;
   }
 
-  onBeforeMount(async() => {
-    let response = await getServices();
-    if (!response.error) {
-        services.value = response.data;
-    }else{
-        console.log('error getting services', response.message);
+  async function fetchServices() {
+        let response = await getServices();
+        if (!response.error) {
+            services.value = response.data;
+            console.log('services', response.data);
+        }else{
+            console.log('error getting services', response.message);
+        }
     }
+
+    async function fetchHosts() {
+      let response = await getHosts();
+      if (!response.error) {
+          hosts.value = response.data;
+          console.log('hosts', response.data);
+      }else{
+          console.log('error getting hosts', response.message);
+      }
+  }
+
+  onBeforeMount(async() => {
+    await fetchServices();
+    await fetchHosts();
   })
 
 

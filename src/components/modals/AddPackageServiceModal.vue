@@ -21,8 +21,8 @@
                 <!-- <v-date-picker v-model="expiryDate" mode="dateTime" /> -->
                 <!-- <v-date-picker v-model="date" v-bind="datePickerProps" @input="showTimePicker" full-width></v-date-picker> -->
             </VCol>
-            <VCol cols="10" class="my-1 align-center">
-                <VTextField v-model="host" label="Host" placeholder="Host" :rules="hostRules" />
+            <VCol v-if="showExpiryDate" cols="10" class="my-1 align-center">
+                <v-select label="Select Host" item-title="name" item-value="id" :items="hosts" v-model="hostId" />
             </VCol>
             <VCol cols="10" class="my-1">
                 <VBtn block type="submit">Submit</VBtn>
@@ -34,6 +34,8 @@
 <script setup>
     import { getServices } from '@/services/services';
 
+    import { getHosts } from '@/services/hosts';
+
     import '@vuepic/vue-datepicker/dist/main.css';
 
     import { defineEmits, defineProps, onBeforeMount } from 'vue';
@@ -42,11 +44,12 @@
 
 
     let services = ref([]);
+    let hosts = ref([]);
     let serviceId = ref();
+    let hostId = ref();
     let name = ref('');
     // let expiryDate = ref(new Date());
     let expiryDate = ref(null);
-    let host = ref('');
     let showExpiryDate = ref(true);
     let isFormValid = ref(false);
     let expiryError = ref('');
@@ -54,7 +57,7 @@
 
     const nameRules = [ v => !!v || 'Name is required' ];
     const serviceRules = [ v => !!v || 'Select a Service' ];
-    const hostRules = [ v => !!v || 'Host is required' ];
+    // const hostRules = [ v => !!v || 'Host is required' ];
 
     const onSelect = (a) => {
         console.log('service:', serviceId.value);
@@ -85,7 +88,7 @@
                     package_id: props.packageId,
                     service_id: serviceId.value,
                     name: name.value,
-                    host: host.value
+                    host_id: hostId.value
                 };
                 if(showExpiryDate.value) data.expiry_date = expiryDate.value;
                 const response = await save(data);
@@ -105,7 +108,7 @@
         }
     }
 
-    onBeforeMount(async() => {
+    async function fetchServices() {
         let response = await getServices();
         if (!response.error) {
             services.value = response.data;
@@ -113,6 +116,21 @@
         }else{
             console.log('error getting services', response.message);
         }
+    }
+
+    async function fetchHosts() {
+        let response = await getHosts();
+        if (!response.error) {
+            hosts.value = response.data;
+            console.log('hosts', response.data);
+        }else{
+            console.log('error getting hosts', response.message);
+        }
+    }
+
+    onBeforeMount(async() => {
+        await fetchServices();
+        await fetchHosts();
     })
 
 </script>

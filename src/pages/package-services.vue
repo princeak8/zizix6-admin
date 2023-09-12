@@ -21,7 +21,7 @@
           <AddPackageServiceModal :dialog="dialog" :packageId="clientPackage.id" @saved="serviceAdded()" />
         </BaseModal>
         <BaseModal v-if="showUpdateModal" @toggle="toggleUpdateModal" :title="'Update Service'">
-          <UpdatePackageServiceModal @updated="serviceUpdated" :services="services" :packageService="packageService" :serviceId="serviceId" />
+          <UpdatePackageServiceModal @updated="serviceUpdated" :services="services" :hosts="hosts" :packageService="packageService" :serviceId="serviceId" />
         </BaseModal>
 
         <div v-if="loaded && errorMessage == ''" class="body">
@@ -53,7 +53,7 @@
               <tr v-for="service in clientPackage.services" :key="service.id">
                 <td>{{ service.name }}</td>
                 <td class="text-center">{{ service.expiry_date }}</td>
-                <td class="text-center">{{ service.host }}</td>
+                <td class="text-center">{{ (service.host) ? service.host.name : '' }}</td>
                 <td class="text-center">{{ service.service.name }}</td>
                 <td class="text-center">
                   <VBtn color="warning" dark class="" @click="toggleUpdateModal(service.id)">Edit</VBtn>
@@ -72,6 +72,7 @@
 
 <script setup>
   import AddPackageServiceModal from '@/components/modals/AddPackageServiceModal.vue';
+import { getHosts } from '@/services/hosts';
 import { getPackageWithServices } from '@/services/packages';
 import { getServices } from '@/services/services';
 import { defineProps, onBeforeMount } from 'vue';
@@ -92,12 +93,13 @@ import UpdatePackageServiceModal from '../components/modals/UpdatePackageService
   let packageService = ref({
     id: '',
     name: '',
-    host: '',
+    hostId: '',
     expiryDate: '',
     serviceId: '',
     packageId: ''
   });
   let services = ref([]);
+  let hosts = ref([]);
 
   // console.log("packageId", props.packageId);
   const getPackage = async(packageId) => {
@@ -136,7 +138,7 @@ import UpdatePackageServiceModal from '../components/modals/UpdatePackageService
         console.log('not null:');
         packageService.value.id = id;
         packageService.value.name = selService.name;
-        packageService.value.host = selService.host;
+        packageService.value.hostId = selService.host_id;
         packageService.value.expiryDate = selService.expiry_date;
         packageService.value.serviceId = selService.service_id;
         packageService.value.packageId = selService.package_id;
@@ -154,13 +156,29 @@ import UpdatePackageServiceModal from '../components/modals/UpdatePackageService
     return null;
   }
 
-  onBeforeMount(async() => {
-    let response = await getServices();
+  async function fetchServices() {
+      let response = await getServices();
+      if (!response.error) {
+          services.value = response.data;
+          console.log('services', response.data);
+      }else{
+          console.log('error getting services', response.message);
+      }
+  }
+
+  async function fetchHosts() {
+    let response = await getHosts();
     if (!response.error) {
-        services.value = response.data;
+        hosts.value = response.data;
+        console.log('hosts', response.data);
     }else{
-        console.log('error getting services', response.message);
+        console.log('error getting hosts', response.message);
     }
+  }
+
+  onBeforeMount(async() => {
+    await fetchServices();
+    await fetchHosts();
   })
 
 

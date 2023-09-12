@@ -22,8 +22,9 @@
       Open Dialog
     </v-btn> -->
 
-    
-        <AddPackageServiceModal :dialog="dialog" :packageId="clientPackage.id" @toggle="toggleModal" @saved="serviceAdded()" />
+        <BaseModal v-if="showModal" @toggle="toggleModal" :title="'Add a Package Service'">
+          <AddPackageServiceModal :packageId="clientPackage.id" @toggle="toggleModal" @saved="serviceAdded()" />
+        </BaseModal>
 
         <div v-if="loaded && errorMessage == ''" class="body">
           
@@ -49,13 +50,10 @@
               <tr v-for="service in clientPackage.services" :key="service.id">
                 <td>{{ service.name }}</td>
                 <td class="text-center">{{ service.expiry_date }}</td>
-                <td class="text-center">{{ service.host }}</td>
+                <td class="text-center">{{ (service.host) ? service.host.name : '' }}</td>
                 <td class="text-center">{{ service.service.name }}</td>
                 <td class="text-center">
                   <VBtn color="warning" dark class="">Edit</VBtn>
-                  <RouterLink to="package/{{ p.id }}/services">
-                    <VBtn color="primary" dark>View Services</VBtn>
-                  </RouterLink>
                 </td>
               </tr>
             </tbody>
@@ -99,7 +97,7 @@ import { defineProps, onBeforeMount } from 'vue';
 
     getPackage(props.packageId);
 
-    const toggleModal = () => dialog.value = !dialog.value;
+    const toggleModal = () => showModal.value = !showModal.value;
 
     const serviceAdded = async () => {
       await getPackage(props.packageId);

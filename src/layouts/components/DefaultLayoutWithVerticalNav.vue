@@ -104,6 +104,12 @@ const upgradeBanner = computed(() => {
       />
       <VerticalNavLink
         :item="{
+          title: 'Price Lists',
+          to: '/price-lists',
+        }"
+      />
+      <VerticalNavLink
+        :item="{
           title: 'Clients',
           to: '/clients',
         }"
