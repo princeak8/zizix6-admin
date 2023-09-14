@@ -71,6 +71,7 @@
   import AddPackageServiceModal from '@/components/modals/AddPackageServiceModal.vue';
 import { getPackageWithServices } from '@/services/packages';
 import { defineProps, onBeforeMount } from 'vue';
+import BaseModal from '../components/modals/BaseModal.vue';
 
   const props = defineProps({
     packageId: String
